@@ -122,6 +122,20 @@ fdescribe('UserInfoComponent', () => {
   // TODO: 待確認 為何 angular 13 的 waitForAsync 會無效
   // 已知 原本 @angular/core/testing 提供的 async 之前可以使用，後來因為跟原生撞名 ，所以某個版本後使用 waitForAsync
   // 問題： 雖然使用 whenStable 會等待異步回應後才斷言，但值卻沒有變
+  it('使用 waitForAsync 等待異步完成', waitForAsync(() => {
+
+    let a = 1;
+
+    setTimeout(() => {
+      a = 2;
+    }, 2000);
+
+    fixture.whenStable().then(() => {
+      expect(a).toBe(2);
+    });
+
+  }));
+
   it('[第二種方式] 當 API 成功回傳後，應該顯示正確的使用者資料', waitForAsync(() => {
 
     expect(imgElement.src).toBe(window.location.origin + '/');
@@ -133,22 +147,18 @@ fdescribe('UserInfoComponent', () => {
 
     component.userName = 'JiaHongL';
 
-    fixture.whenStable()
-      .then(() => {
-        fixture.detectChanges();
-        return fixture.whenStable();
-      })
-      .then(() => {
-        fixture.detectChanges();
+    fixture.whenStable().then(() => {
 
-        expect(component.userInfo).toBe(fakeData);
+      fixture.detectChanges();
 
-        expect(imgElement.src).toBe(fakeData.avatar_url);
-        expect(cardTitleElement.innerText).toBe(fakeData.name);
-        expect(cardTextElement.innerText).toBe(fakeData.bio);
-        expect(textMutedElement.innerText).toBe('blog : ' + fakeData.blog);
+      expect(component.userInfo).toBe(fakeData);
 
-      });
+      expect(imgElement.src).toBe(fakeData.avatar_url);
+      expect(cardTitleElement.innerText).toBe(fakeData.name);
+      expect(cardTextElement.innerText).toBe(fakeData.bio);
+      expect(textMutedElement.innerText).toBe('blog : ' + fakeData.blog);
+
+    });
 
   }));
 
