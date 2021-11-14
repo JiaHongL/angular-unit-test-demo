@@ -1,13 +1,14 @@
-import { delay } from 'rxjs/internal/operators';
-import { of, throwError } from 'rxjs';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { ApiService } from '../api/api.service';
+import { of, throwError } from 'rxjs';
+import { delay } from 'rxjs';
+
+import { ApiService, UserInfo } from '../api/api.service';
 
 import { UserInfoComponent } from './user-info.component';
 
-const fakeData = {
+const fakeData: UserInfo = {
   login: 'JiaHongL',
   id: 6601449,
   node_id: 'MDQ6VXNlcjY2MDE0NDk=',
@@ -27,13 +28,13 @@ const fakeData = {
   type: 'User',
   site_admin: false,
   name: 'Joe',
-  company: null,
+  company: null as any,
   blog: 'http://jhlstudy.blogspot.tw/',
   location: 'Taipei',
-  email: null,
-  hireable: null,
+  email: null as any,
+  hireable: null as any,
   bio: 'frontend developer',
-  twitter_username: null,
+  twitter_username: null as any,
   public_repos: 39,
   public_gists: 0,
   followers: 14,
@@ -59,13 +60,12 @@ fdescribe('UserInfoComponent', () => {
   let cardTextElement: HTMLElement = null;
   let textMutedElement: HTMLElement = null;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [UserInfoComponent],
       imports: [HttpClientTestingModule],
-    })
-      .compileComponents();
-  }));
+    }).compileComponents();
+  });
 
   beforeEach(() => {
 
@@ -73,14 +73,14 @@ fdescribe('UserInfoComponent', () => {
 
     component = fixture.componentInstance;
 
-    const apiService: ApiService = TestBed.get(ApiService);
+    const apiService: ApiService = TestBed.inject(ApiService);
 
     getUserInfoSpy = spyOn(apiService, 'getUserInfo');
 
     // 根據不同傳入的參數，回傳不同的 fake data
     getUserInfoSpy
-      .withArgs('JiaHongL').and.returnValue(of(fakeData).pipe(delay(0)))
-      .withArgs('joeeeeeeeeeeeeeeeee').and.returnValue(throwError(fakeErrorMessage).pipe(delay(0)));
+      .withArgs('JiaHongL').and.returnValue(of(fakeData).pipe(delay(1000)))
+      .withArgs('joeeeeeeeeeeeeeeeee').and.returnValue(throwError(() => fakeErrorMessage).pipe(delay(1000)));
 
     imgElement = fixture.debugElement.nativeElement.querySelector('img');
     cardTitleElement = fixture.debugElement.nativeElement.querySelector('.card-title');
@@ -97,7 +97,7 @@ fdescribe('UserInfoComponent', () => {
 
   it('[第一種方式] 當 API 成功回傳後，應該顯示正確的使用者資料', fakeAsync(() => {
 
-    expect(imgElement.src).toBe(window.location.origin + '/' + null);
+    expect(imgElement.src).toBe(window.location.origin + '/');
     expect(cardTitleElement.innerText).toBe('');
     expect(cardTextElement.innerText).toBe('');
     expect(textMutedElement.innerText).toBe('blog :');
@@ -106,7 +106,7 @@ fdescribe('UserInfoComponent', () => {
 
     component.userName = 'JiaHongL';
 
-    tick();
+    tick(1000);
 
     fixture.detectChanges();
 
@@ -119,9 +119,12 @@ fdescribe('UserInfoComponent', () => {
 
   }));
 
-  fit('[第二種方式] 當 API 成功回傳後，應該顯示正確的使用者資料', async(() => {
+  // TODO: 待確認 為何 angular 13 的 waitForAsync 會無效
+  // 已知 原本 @angular/core/testing 提供的 async 之前可以使用，後來因為跟原生撞名 ，所以某個版本後使用 waitForAsync
+  // 問題： 雖然使用 whenStable 會等待異步回應後才斷言，但值卻沒有變
+  it('[第二種方式] 當 API 成功回傳後，應該顯示正確的使用者資料', waitForAsync(() => {
 
-    expect(imgElement.src).toBe(window.location.origin + '/' + null);
+    expect(imgElement.src).toBe(window.location.origin + '/');
     expect(cardTitleElement.innerText).toBe('');
     expect(cardTextElement.innerText).toBe('');
     expect(textMutedElement.innerText).toBe('blog :');
@@ -130,16 +133,22 @@ fdescribe('UserInfoComponent', () => {
 
     component.userName = 'JiaHongL';
 
-    fixture.whenStable().then(() => {
+    fixture.whenStable()
+      .then(() => {
+        fixture.detectChanges();
+        return fixture.whenStable();
+      })
+      .then(() => {
+        fixture.detectChanges();
 
-      expect(component.userInfo).toBe(fakeData);
+        expect(component.userInfo).toBe(fakeData);
 
-      expect(imgElement.src).toBe(fakeData.avatar_url);
-      expect(cardTitleElement.innerText).toBe(fakeData.name);
-      expect(cardTextElement.innerText).toBe(fakeData.bio);
-      expect(textMutedElement.innerText).toBe('blog : ' + fakeData.blog);
+        expect(imgElement.src).toBe(fakeData.avatar_url);
+        expect(cardTitleElement.innerText).toBe(fakeData.name);
+        expect(cardTextElement.innerText).toBe(fakeData.bio);
+        expect(textMutedElement.innerText).toBe('blog : ' + fakeData.blog);
 
-    });
+      });
 
   }));
 

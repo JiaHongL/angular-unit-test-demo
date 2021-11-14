@@ -36,7 +36,6 @@ export class UserInfoComponent implements OnInit {
 
     this.apiService.getUserInfo(this._userName).subscribe((res) => {
       this.userInfo = res;
-      console.log('回來了',res);
     }, (error) => {
       alert(error.message);
     });

@@ -37,7 +37,7 @@ export class TextInputComponent implements OnInit, AfterViewInit, ControlValueAc
   ) {
   }
 
-  onChange: (value) => void;
+  onChange: (value:any) => void;
 
   onTouched: () => void;
 

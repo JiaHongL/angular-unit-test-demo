@@ -24,13 +24,12 @@ describe('TextInputComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let input: HTMLInputElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [TextInputComponent, TestHostComponent],
       imports: [ReactiveFormsModule],
-    })
-      .compileComponents();
-  }));
+    }).compileComponents();
+  });
 
   beforeEach(() => {
 
