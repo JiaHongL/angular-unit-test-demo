@@ -64,6 +64,10 @@ fdescribe('UserInfoComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [UserInfoComponent],
       imports: [HttpClientTestingModule],
+      // 其它方式：直接替換成另一隻 mock 的 service
+      // providers: [
+      //   { provide: ApiService, useExisting: MockApiService }
+      // ]
     }).compileComponents();
   });
 
