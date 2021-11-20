@@ -17,7 +17,7 @@ export class ButtonComponent implements OnInit {
       classList.forEach((className) => {
         buttonClassList.add(className);
       });
-    });
+    },0);
   }
 
 @Input() color:

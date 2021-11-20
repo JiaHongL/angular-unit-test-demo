@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { ButtonComponent } from './button.component';
 
@@ -91,9 +91,9 @@ describe('ButtonComponent', () => {
 
     component.class = 'w-100';
 
-    fixture.detectChanges();
+    tick(0);
 
-    tick();
+    fixture.detectChanges();
 
     expect(button.classList).toContain('w-100');
   }));
@@ -111,6 +111,5 @@ describe('ButtonComponent', () => {
     expect(buttonClickEmitSpy).toHaveBeenCalledTimes(1);
 
   });
-
 
 });

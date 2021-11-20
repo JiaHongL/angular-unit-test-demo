@@ -8,7 +8,7 @@
         <div class="card-body">
           <app-button class="mx-1 my-1">primary</app-button>
           <app-button class="mx-1 my-1" [disabled]="true">primary(disabled)</app-button>
-          <app-button class="mx-1 my-1" color="secondary">secondary</app-button>
+          <app-button class="mx-1 my-1" color="secondary" (buttonClick)="alert('button click!')">secondary</app-button>
           <app-button class="mx-1 my-1" color="success">success</app-button>
           <app-button class="mx-1 my-1" color="danger">danger</app-button>
           <app-button class="mx-1 my-1" color="warning">warning</app-button>

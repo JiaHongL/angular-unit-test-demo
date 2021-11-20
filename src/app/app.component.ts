@@ -12,5 +12,9 @@ export class AppComponent {
 
   userName = 'JiaHongL';
 
+  alert(str:string){
+    alert(str);
+  }
+
 }
 

@@ -48,7 +48,7 @@ const fakeErrorMessage = {
   documentation_url: 'https://docs.github.com/rest/reference/users#get-a-user'
 };
 
-fdescribe('UserInfoComponent', () => {
+describe('UserInfoComponent', () => {
 
   let component: UserInfoComponent;
 
@@ -122,7 +122,7 @@ fdescribe('UserInfoComponent', () => {
 
   }));
 
-  it('當 API 查無使用者時，應該使用 alert 跳出 "Not Found" 提示', () => {
+  fit('當 API 查無使用者時，應該使用 alert 跳出 "Not Found" 提示', () => {
 
     const alertSpy = spyOn(window, 'alert');
 
@@ -130,10 +130,12 @@ fdescribe('UserInfoComponent', () => {
 
     component.userName = 'joeeeeeeeeeeeeeeeee';
 
-    fixture.detectChanges();
-
     expect(alertSpy).toHaveBeenCalled();
+
+    expect(alertSpy).toHaveBeenCalledTimes(1);
     expect(alertSpy).toHaveBeenCalledWith(fakeErrorMessage.message);
+
+    expect(alertSpy).toHaveBeenCalledOnceWith(fakeErrorMessage.message);
 
   });
 
