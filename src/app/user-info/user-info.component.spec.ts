@@ -1,7 +1,7 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { of, throwError } from 'rxjs';
+import { dematerialize, materialize, of, throwError } from 'rxjs';
 import { delay } from 'rxjs';
 
 import { ApiService, UserInfo } from '../api/api.service';
@@ -82,8 +82,18 @@ describe('UserInfoComponent', () => {
 
     // 根據不同傳入的參數，回傳不同的 fake data
     getUserInfoSpy
-      .withArgs('JiaHongL').and.returnValue(of(fakeData).pipe(delay(1000)))
-      .withArgs('joeeeeeeeeeeeeeeeee').and.returnValue(throwError(() => fakeErrorMessage).pipe(delay(4000)));
+      // success
+      .withArgs('JiaHongL').and.returnValue(
+        of(fakeData).pipe(delay(1000))
+      )
+      // error
+      .withArgs('joeeeeeeeeeeeeeeeee').and.returnValue(
+        throwError(() => fakeErrorMessage).pipe(
+          materialize(),
+          delay(1000),
+          dematerialize()
+        )
+      );
 
     imgElement = fixture.debugElement.nativeElement.querySelector('img');
     cardTitleElement = fixture.debugElement.nativeElement.querySelector('.card-title');
@@ -122,13 +132,15 @@ describe('UserInfoComponent', () => {
 
   }));
 
-  fit('當 API 查無使用者時，應該使用 alert 跳出 "Not Found" 提示', () => {
+  it('當 API 查無使用者時，應該使用 alert 跳出 "Not Found" 提示', fakeAsync(() => {
 
     const alertSpy = spyOn(window, 'alert');
 
     expect(alertSpy).not.toHaveBeenCalled();
 
     component.userName = 'joeeeeeeeeeeeeeeeee';
+
+    tick(1000);
 
     expect(alertSpy).toHaveBeenCalled();
 
@@ -137,6 +149,6 @@ describe('UserInfoComponent', () => {
 
     expect(alertSpy).toHaveBeenCalledOnceWith(fakeErrorMessage.message);
 
-  });
+  }));
 
 });

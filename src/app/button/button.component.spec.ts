@@ -46,6 +46,8 @@ describe('ButtonComponent', () => {
       'btn-link': false,
     });
 
+    expect(button.disabled).toBeFalse();
+
   });
 
   it('當 @Input disabled 傳入 true，按鈕需禁用', () => {
