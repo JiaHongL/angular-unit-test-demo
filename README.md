@@ -25,7 +25,7 @@ checklist
 - [x] 理解使用 TestHostComponent 幫助 AppTextInput 進行測試。
 - [x] 理解使用 By.directive 也可以取得某個 angular tag。
 - [x] 理解使用 afterEach 對於一些全域變數進行 reset 的重要行。(此範例是刻意抽成 myFormControl，也可以不抽出來)
-- [x] 理解如何觸發 focus 與 blur event
+- [x] 理解如何觸發 focus 與 blur event。
 - [x] 理解 Jasmine 的 Spy 也可以取得被呼叫傳入的值(args)。
 
 ## 範例3：user-info
