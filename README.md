@@ -30,7 +30,9 @@ checklist
 
 ## 範例3：user-info
 
-示範如何對 API 進行 Mock，並測試 API 成功 與 失敗 的情境。(請注意此範例是刻意把打 API 行為寫在 ui component 裡面)
+示範如何對 API 進行 Mock，並測試 API 成功 與 失敗 的情境。(請注意此範例是刻意把打 API 行為寫在 ui component 裡面)。
+
+checklist
 
 - [x] 理解如何抽出 Service 然後進行 mock。
 - [x] 理解 Jasmine 的 Spy 可以根據不同參數，進行不一樣的回傳值。
@@ -39,6 +41,8 @@ checklist
 ## 範例4：user-info-area
 
 示範如何測試元件內部的子元件，基本上我們應該只專注測試與此子元件的 @input 與 ＠output 的綁定，不應該去對此元件的畫面或邏輯進行測試，換句話說，這顆子元件的測試應該寫在子元件底下，而不是由父元件去對子元件進行測試。
+
+checklist
 
 - [x] 理解範例四與範例二的差別。
 - [x] 理解如何測試對於子元件 @input 的兩種方式。
