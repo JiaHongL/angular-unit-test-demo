@@ -10,8 +10,6 @@ export class AppComponent {
 
   textInputFormControl = new FormControl('10000');
 
-  userName = 'JiaHongL';
-
   alert(str:string){
     alert(str);
   }

@@ -8,13 +8,15 @@ import { ButtonComponent } from './button/button.component';
 import { TextInputComponent } from './text-input/text-input.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserInfoAreaComponent } from './user-info-area/user-info-area.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
       ButtonComponent,
       TextInputComponent,
-      UserInfoComponent
+      UserInfoComponent,
+      UserInfoAreaComponent
    ],
   imports: [
     BrowserModule,

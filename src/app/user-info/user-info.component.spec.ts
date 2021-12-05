@@ -54,6 +54,7 @@ describe('UserInfoComponent', () => {
 
   let fixture: ComponentFixture<UserInfoComponent>;
   let getUserInfoSpy: jasmine.Spy = null;
+  let onloadEmitSpy: jasmine.Spy = null;
 
   let imgElement: HTMLImageElement = null;
   let cardTitleElement: HTMLElement = null;
@@ -79,6 +80,7 @@ describe('UserInfoComponent', () => {
     const apiService: ApiService = TestBed.inject(ApiService);
 
     getUserInfoSpy = spyOn(apiService, 'getUserInfo');
+    onloadEmitSpy = spyOn(component.onload, 'emit');
 
     // 根據不同傳入的參數，回傳不同的 fake data
     getUserInfoSpy
@@ -115,7 +117,9 @@ describe('UserInfoComponent', () => {
     expect(cardTextElement.innerText).toBe('');
     expect(textMutedElement.innerText).toBe('blog :');
 
+    expect(getUserInfoSpy).toHaveBeenCalledTimes(0);
     expect(component.userInfo).toBeNull();
+    expect(onloadEmitSpy).toHaveBeenCalledTimes(0);
 
     component.userName = 'JiaHongL';
 
@@ -123,7 +127,13 @@ describe('UserInfoComponent', () => {
 
     fixture.detectChanges();
 
+    const onloadEmitArgs = onloadEmitSpy.calls.mostRecent().args[0];
+
+    expect(getUserInfoSpy).toHaveBeenCalledTimes(1);
     expect(component.userInfo).toBe(fakeData);
+    expect(onloadEmitSpy).toHaveBeenCalledTimes(1);
+    expect(onloadEmitSpy).toHaveBeenCalledWith(fakeData);
+    expect(onloadEmitArgs).toBe(fakeData);
 
     expect(imgElement.src).toBe(fakeData.avatar_url);
     expect(cardTitleElement.innerText).toBe(fakeData.name);
@@ -136,12 +146,14 @@ describe('UserInfoComponent', () => {
 
     const alertSpy = spyOn(window, 'alert');
 
+    expect(getUserInfoSpy).not.toHaveBeenCalled();
     expect(alertSpy).not.toHaveBeenCalled();
 
     component.userName = 'joeeeeeeeeeeeeeeeee';
 
     tick(1000);
 
+    expect(getUserInfoSpy).toHaveBeenCalled();
     expect(alertSpy).toHaveBeenCalled();
 
     expect(alertSpy).toHaveBeenCalledTimes(1);

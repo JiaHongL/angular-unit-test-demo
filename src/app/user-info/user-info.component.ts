@@ -1,5 +1,5 @@
 import { ApiService, UserInfo } from './../api/api.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user-info',
@@ -19,6 +19,8 @@ export class UserInfoComponent implements OnInit {
     }
   }
 
+  @Output() onload = new EventEmitter<any>();
+
   get userName() {
     return this._userName;
   }
@@ -36,6 +38,7 @@ export class UserInfoComponent implements OnInit {
 
     this.apiService.getUserInfo(this._userName).subscribe((res) => {
       this.userInfo = res;
+      this.onload.emit(res);
     }, (error) => {
       alert(error.message);
     });

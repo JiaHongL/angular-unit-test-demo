@@ -1,0 +1,4 @@
+<app-button color="success" class="my-1 mx-1" (buttonClick)="userName='JiaHongL'">Joe</app-button>
+<app-button color="secondary" class="my-1 mx-1" (buttonClick)="userName='getify'">Kyle Simpson</app-button>
+
+<app-user-info [userName]="userName" (onload)="onload($event)"></app-user-info>
