@@ -88,7 +88,7 @@ describe('ButtonComponent', () => {
 
   });
 
-  it('測試class是否正常', fakeAsync(() => {
+  it('測試 button class 是否正常', fakeAsync(() => {
     expect(button.classList).not.toContain('w-100');
 
     component.class = 'w-100';

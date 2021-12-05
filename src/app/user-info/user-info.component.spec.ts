@@ -110,7 +110,7 @@ describe('UserInfoComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('[第一種方式] 當 API 成功回傳後，應該顯示正確的使用者資料', fakeAsync(() => {
+  it('當 API 成功回傳後，應該顯示正確的使用者資料', fakeAsync(() => {
 
     expect(imgElement.src).toBe(window.location.origin + '/');
     expect(cardTitleElement.innerText).toBe('');
