@@ -64,12 +64,6 @@ export class TextInputComponent implements OnInit, AfterViewInit, ControlValueAc
   }
 
   setDisabledState(isDisabled: boolean): void {
-    if (
-      isDisabled && this.ngControl.control.disabled === isDisabled ||
-      !isDisabled && this.ngControl.control.enabled === !isDisabled
-    ) {
-      return;
-    }
     this.disabled = isDisabled;
   }
 
