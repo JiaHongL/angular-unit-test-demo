@@ -47,3 +47,7 @@ checklist
 - [x] 理解範例四與範例二的差別。
 - [x] 理解如何測試對於子元件 @input 的兩種方式。
 - [x] 理解如何測試對於子元件 @output 的方式。
+
+## wiki：相關概念整理(只有Q，沒有A!)
+- [x]  [Angular Unit Test 重點 Q&A](https://github.com/JiaHongL/angular-unit-test-demo/wiki/Angular-Unit-Test-%E9%87%8D%E9%BB%9E-Q&A)
+- [x]  [自製表單元件 ControlValueAccessor 重點 Q&A](https://github.com/JiaHongL/angular-unit-test-demo/wiki/%E8%87%AA%E8%A3%BD%E8%A1%A8%E5%96%AE%E5%85%83%E4%BB%B6-ControlValueAccessor-%E9%87%8D%E9%BB%9E-Q&A)
